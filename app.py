@@ -343,6 +343,214 @@ else:
                 st.metric("Nuevo Accuracy", "95.1%", "+0.9%")
 
 # ================================
+# 🔭 TELESCOPIO VIRTUAL EXO-AI - NUEVA SECCIÓN
+# ================================
+st.markdown("---")
+st.header("🔭 Control de Telescopio Virtual EXO-AI")
+
+# Base de datos de exoplanetas famosos con coordenadas REALES
+exoplanetas_famosos = {
+    "Kepler-186f": {
+        "RA": "19h 54m 36.651s", 
+        "DEC": "+43° 57' 18.06\"",
+        "Tipo": "🌍 Tierra Super",
+        "Distancia": "492 años luz",
+        "Descripción": "Primer exoplaneta del tamaño de la Tierra en zona habitable"
+    },
+    "TRAPPIST-1e": {
+        "RA": "23h 06m 29.283s", 
+        "DEC": "-05° 02' 28.59\"",
+        "Tipo": "🌊 Planeta Oceánico",
+        "Distancia": "39 años luz", 
+        "Descripción": "Planeta rocoso en sistema de 7 exoplanetas"
+    },
+    "Proxima Centauri b": {
+        "RA": "14h 29m 42.948s", 
+        "DEC": "-62° 40' 46.14\"",
+        "Tipo": "🪐 Supertierra",
+        "Distancia": "4.24 años luz",
+        "Descripción": "Exoplaneta más cercano a la Tierra"
+    },
+    "Kepler-452b": {
+        "RA": "19h 44m 00.886s", 
+        "DEC": "+44° 16' 39.17\"",
+        "Tipo": "🌎 Tierra 2.0",
+        "Distancia": "1,402 años luz",
+        "Descripción": "Planeta similar a la Tierra en zona habitable"
+    },
+    "HD 209458 b": {
+        "RA": "22h 03m 10.772s", 
+        "DEC": "+18° 53' 03.54\"", 
+        "Tipo": "🔥 Júpiter Caliente",
+        "Distancia": "159 años luz",
+        "Descripción": "Primer exoplaneta detectado por tránsito"
+    }
+}
+
+# Crear pestañas para el telescopio
+tab_tel1, tab_tel2, tab_tel3 = st.tabs(["🎯 Apuntar Telescopio", "📡 Coordenadas en Tiempo Real", "🌌 Simulación 3D"])
+
+with tab_tel1:
+    st.subheader("🎯 Selección de Objetivo")
+    
+    # Selección de exoplaneta
+    exoplaneta_seleccionado = st.selectbox(
+        "Selecciona un exoplaneta para observar:",
+        list(exoplanetas_famosos.keys())
+    )
+    
+    # Mostrar información del exoplaneta seleccionado
+    info = exoplanetas_famosos[exoplaneta_seleccionado]
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        st.metric("📡 Ascensión Recta", info["RA"])
+        st.metric("📍 Declinación", info["DEC"])
+    with col2:
+        st.metric("🪐 Tipo", info["Tipo"])
+        st.metric("🌌 Distancia", info["Distancia"])
+    
+    st.info(f"**Descripción:** {info['Descripción']}")
+    
+    # Botón para redirigir telescopio
+    if st.button("🔄 REDIRIGIR TELESCOPIO EXO-AI", type="primary", key="telescopio_btn"):
+        with st.spinner(f'🔭 Apuntando telescopio a {exoplaneta_seleccionado}...'):
+            # Simulación de movimiento del telescopio
+            progress_bar = st.progress(0)
+            for i in range(100):
+                time.sleep(0.02)  # Efecto dramático
+                progress_bar.progress(i + 1)
+            
+            st.success(f"✅ **TELESCOPIO APUNTANDO A:** {exoplaneta_seleccionado}")
+            
+            # Efectos visuales de confirmación
+            st.balloons()
+            
+            # Mostrar coordenadas de targeting
+            st.subheader("🎯 Coordenadas de Targeting")
+            st.code(f"""
+            ASCENSIÓN RECTA: {info['RA']}
+            DECLINACIÓN:     {info['DEC']}
+            OBJETIVO:        {exoplaneta_seleccionado}
+            ESTADO:          ⚡ TELESCOPIO BLOQUEADO EN OBJETIVO
+            """)
+
+with tab_tel2:
+    st.subheader("📡 Panel de Control de Telescopio")
+    
+    # Simulación de coordenadas en tiempo real
+    st.markdown("""
+    <div class="feature-card">
+    <h3>🛰️ Sistema de Seguimiento Automático</h3>
+    <p>El telescopio EXO-AI mantiene seguimiento automático compensando la rotación terrestre.</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Simulación de datos de telescopio en tiempo real
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.metric("⚡ Velocidad de Seguimiento", "15.0″/seg", "0.5″/seg")
+    with col2:
+        st.metric("🎯 Precisión de Apuntado", "0.1 arcsec", "±0.05")
+    with col3:
+        st.metric("🌡️ Temperatura Espejo", "-10°C", "-2°C")
+    
+    # Gráfico simple de trayectoria
+    st.subheader("📈 Trayectoria de Seguimiento")
+    fig_trayectoria = go.Figure()
+    
+    # Simular datos de trayectoria
+    tiempo = np.linspace(0, 24, 100)  # 24 horas
+    ra_trayectoria = 15 * tiempo  # Simulación simple
+    
+    fig_trayectoria.add_trace(go.Scatter(
+        x=tiempo, y=ra_trayectoria, 
+        mode='lines', name='Trayectoria RA',
+        line=dict(color='#00ff88', width=3)
+    ))
+    
+    fig_trayectoria.update_layout(
+        title="Trayectoria de Seguimiento - Ascensión Recta",
+        xaxis_title="Tiempo (horas)",
+        yaxis_title="Ascensión Recta",
+        height=300
+    )
+    st.plotly_chart(fig_trayectoria, use_container_width=True)
+
+with tab_tel3:
+    st.subheader("🌌 Simulación del Sistema Estelar")
+    
+    # Simulación 3D simple del sistema estelar
+    st.markdown("""
+    <div class="feature-card">
+    <h3>🪐 Vista del Sistema Exoplanetario</h3>
+    <p>Simulación de la configuración orbital del sistema seleccionado.</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Crear simulación 3D simple con Plotly
+    fig_3d = go.Figure()
+    
+    # Estrella central (punto grande)
+    fig_3d.add_trace(go.Scatter3d(
+        x=[0], y=[0], z=[0],
+        mode='markers',
+        marker=dict(size=10, color='yellow'),
+        name='Estrella'
+    ))
+    
+    # Órbita del exoplaneta (círculo)
+    theta = np.linspace(0, 2*np.pi, 100)
+    radio = 2
+    x_orbita = radio * np.cos(theta)
+    y_orbita = radio * np.sin(theta)
+    z_orbita = np.zeros(100)
+    
+    fig_3d.add_trace(go.Scatter3d(
+        x=x_orbita, y=y_orbita, z=z_orbita,
+        mode='lines',
+        line=dict(color='white', width=1),
+        name='Órbita'
+    ))
+    
+    # Exoplaneta (punto en órbita)
+    fig_3d.add_trace(go.Scatter3d(
+        x=[radio], y=[0], z=[0],
+        mode='markers',
+        marker=dict(size=5, color='blue'),
+        name='Exoplaneta'
+    ))
+    
+    fig_3d.update_layout(
+        title=f"Sistema {exoplaneta_seleccionado} - Vista 3D",
+        scene=dict(
+            xaxis_title="X (UA)",
+            yaxis_title="Y (UA)", 
+            zaxis_title="Z (UA)",
+            bgcolor='black'
+        ),
+        height=400
+    )
+    
+    st.plotly_chart(fig_3d, use_container_width=True)
+    
+    st.info("""
+    **🎮 Controles de Simulación:**
+    - **Click y arrastra** para rotar la vista
+    - **Scroll** para hacer zoom
+    - **Shift + Click** para pan
+    """)
+
+# Mensaje de integración con IA
+st.markdown("""
+<div class="feature-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+<h3>🚀 Integración EXO-AI Completa</h3>
+<p><b>IA → Telescopio → Datos → Mejor IA</b></p>
+<p>Los exoplanetas detectados por nuestra IA pueden ser observados inmediatamente 
+con el telescopio virtual, creando un ciclo de descubrimiento continuo.</p>
+</div>
+""", unsafe_allow_html=True)
+# ================================
 # FOOTER - MARCA COMPETITIVA
 # ================================
 st.markdown("---")

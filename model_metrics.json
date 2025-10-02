@@ -1,0 +1,53 @@
+{
+  "accuracy": 0.7592245153220762,
+  "f1_score": 0.7543343380433776,
+  "n_features": 10,
+  "n_samples": 7994,
+  "class_distribution": {
+    "FALSE POSITIVE": 3910,
+    "CONFIRMED": 2728,
+    "CANDIDATE": 1356
+  },
+  "feature_importance": [
+    {
+      "feature": "koi_prad",
+      "importance": 0.19886991030983894
+    },
+    {
+      "feature": "koi_depth",
+      "importance": 0.1509629390644796
+    },
+    {
+      "feature": "koi_period",
+      "importance": 0.10988794947898718
+    },
+    {
+      "feature": "koi_impact",
+      "importance": 0.09857589713058136
+    },
+    {
+      "feature": "koi_duration",
+      "importance": 0.0981463174663989
+    },
+    {
+      "feature": "koi_teq",
+      "importance": 0.09335241432732562
+    },
+    {
+      "feature": "koi_kepmag",
+      "importance": 0.07421327346155823
+    },
+    {
+      "feature": "koi_time0bk",
+      "importance": 0.06590030394988308
+    },
+    {
+      "feature": "koi_srad",
+      "importance": 0.05756874414535013
+    },
+    {
+      "feature": "koi_smass",
+      "importance": 0.05252225066559705
+    }
+  ]
+}

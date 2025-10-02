@@ -78,7 +78,7 @@ st.markdown("""
 @st.cache_resource
 def load_model():
     try:
-        return joblib.load("exoplanet_model.pkl")
+        return joblib.load("models/exoplanet_model.pkl")  # ✅ CAMBIADO: "exoplanet_model.pkl" → "models/exoplanet_model.pkl"
     except:
         st.error("❌ Modelo no encontrado. Ejecuta primero train.py")
         return None

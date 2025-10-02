@@ -75,7 +75,7 @@ label_encoder = LabelEncoder()
 y_encoded = label_encoder.fit_transform(y)
 
 # Guardar el label encoder
-joblib.dump(label_encoder, "label_encoder.pkl")
+joblib.dump(label_encoder, "models/label_encoder.pkl")
 print(f"🎯 Clases codificadas: {dict(zip(label_encoder.classes_, range(len(label_encoder.classes_))))}")
 
 # -----------------------------
@@ -111,7 +111,7 @@ scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
-joblib.dump(scaler, "scaler.pkl")
+joblib.dump(scaler, "models/scaler.pkl")
 
 # -----------------------------
 # 7. OPTIMIZACIÓN DE HIPERPARÁMETROS
@@ -225,10 +225,10 @@ plt.show()
 print("\n💾 GUARDANDO MODELO Y METADATOS...")
 
 # Guardar modelo
-joblib.dump(final_model, "exoplanet_model.pkl")
+joblib.dump(final_model, "models/exoplanet_model.pkl")
 
 # Guardar features usadas
-with open("features.json", "w") as f:
+with open("models/features.json", "w") as f:
     json.dump(available_features, f)
 
 # Guardar métricas

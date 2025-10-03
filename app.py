@@ -69,6 +69,14 @@ st.markdown("""
         50% { transform: scale(1.05); }
         100% { transform: scale(1); }
     }
+    .vr-warning {
+        background: linear-gradient(135deg, #FF6B35, #F7931E);
+        color: white;
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+        margin: 10px 0;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -355,35 +363,50 @@ exoplanetas_famosos = {
         "DEC": "+43° 57' 18.06\"",
         "Tipo": "🌍 Tierra Super",
         "Distancia": "492 años luz",
-        "Descripción": "Primer exoplaneta del tamaño de la Tierra en zona habitable"
+        "Descripción": "Primer exoplaneta del tamaño de la Tierra en zona habitable",
+        "Textura": "https://cdn.pixabay.com/photo/2011/12/14/12/23/planet-11094_1280.jpg",
+        "Atmosfera": "#4A90E2",
+        "Radio": 1.2
     },
     "TRAPPIST-1e": {
         "RA": "23h 06m 29.283s", 
         "DEC": "-05° 02' 28.59\"",
         "Tipo": "🌊 Planeta Oceánico",
         "Distancia": "39 años luz", 
-        "Descripción": "Planeta rocoso en sistema de 7 exoplanetas"
+        "Descripción": "Planeta rocoso en sistema de 7 exoplanetas",
+        "Textura": "https://cdn.pixabay.com/photo/2016/11/29/13/32/earth-1869761_1280.jpg",
+        "Atmosfera": "#87CEEB",
+        "Radio": 0.9
     },
     "Proxima Centauri b": {
         "RA": "14h 29m 42.948s", 
         "DEC": "-62° 40' 46.14\"",
         "Tipo": "🪐 Supertierra",
         "Distancia": "4.24 años luz",
-        "Descripción": "Exoplaneta más cercano a la Tierra"
+        "Descripción": "Exoplaneta más cercano a la Tierra",
+        "Textura": "https://cdn.pixabay.com/photo/2011/12/14/12/23/planet-11094_1280.jpg",
+        "Atmosfera": "#FF6347",
+        "Radio": 1.3
     },
     "Kepler-452b": {
         "RA": "19h 44m 00.886s", 
         "DEC": "+44° 16' 39.17\"",
         "Tipo": "🌎 Tierra 2.0",
         "Distancia": "1,402 años luz",
-        "Descripción": "Planeta similar a la Tierra en zona habitable"
+        "Descripción": "Planeta similar a la Tierra en zona habitable",
+        "Textura": "https://cdn.pixabay.com/photo/2016/11/29/13/32/earth-1869761_1280.jpg",
+        "Atmosfera": "#32CD32",
+        "Radio": 1.6
     },
     "HD 209458 b": {
         "RA": "22h 03m 10.772s", 
         "DEC": "+18° 53' 03.54\"", 
         "Tipo": "🔥 Júpiter Caliente",
         "Distancia": "159 años luz",
-        "Descripción": "Primer exoplaneta detectado por tránsito"
+        "Descripción": "Primer exoplaneta detectado por tránsito",
+        "Textura": "https://cdn.pixabay.com/photo/2011/12/14/12/23/planet-11094_1280.jpg",
+        "Atmosfera": "#FF4500",
+        "Radio": 2.5
     }
 }
 
@@ -552,110 +575,169 @@ with tab_tel4:
     st.markdown("""
     <div class="feature-card">
     <h3>🌍 Visita el Exoplaneta en Realidad Virtual</h3>
-    <p>Usa tu celular con Google Cardboard para una experiencia inmersiva completa.</p>
+    <p>Experiencia inmersiva simplificada para mejor compatibilidad.</p>
     </div>
     """, unsafe_allow_html=True)
     
-    # Instrucciones para VR
-    col1, col2 = st.columns(2)
+    # Información del exoplaneta seleccionado
+    info = exoplanetas_famosos[exoplaneta_seleccionado]
     
-    with col1:
-        st.markdown("""
-        ### 📱 Preparación VR:
-        1. **Abre esta app en tu celular**
-        2. **Activa el modo VR** en tu navegador
-        3. **Coloca el celular** en Google Cardboard
-        4. **¡Explora el exoplaneta!**
-        """)
-        
-    with col2:
-        st.markdown("""
-        ### 🎮 Controles VR:
-        - **Mueve la cabeza** para mirar alrededor
-        - **Acércate** a objetos interesantes
-        - **Observa** detalles de la superficie
-        """)
+    st.markdown(f"""
+    <div class="vr-warning">
+    <h4>🚀 PREPARANDO SIMULACIÓN VR: {exoplaneta_seleccionado}</h4>
+    <p><b>DISTANCIA:</b> {info['Distancia']} | <b>TIPO:</b> {info['Tipo']}</p>
+    </div>
+    """, unsafe_allow_html=True)
     
-    # Simulación VR Web con A-Frame
-    st.subheader("🌌 Entorno VR del Exoplaneta")
-    
+    # VR SIMPLIFICADO Y FUNCIONAL
     vr_html = f"""
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
-    </head>
-    <body>
-        <a-scene embedded>
-            <!-- Sky - Espacio exterior -->
-            <a-sky color="#000011"></a-sky>
-            
-            <!-- Estrella central -->
-            <a-sphere position="0 2 -10" radius="2" color="#FFFF00" 
-                     animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"></a-sphere>
-            
-            <!-- Exoplaneta -->
-            <a-sphere position="8 2 -10" radius="1.2" color="#4A90E2"
-                     animation="property: rotation; to: 0 360 0; loop: true; dur: 15000">
-                <a-animation attribute="position" from="8 2 -10" to="8 2.5 -10" 
-                           direction="alternate" repeat="indefinite" dur="2000"></a-animation>
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <style>
+        body {{
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }}
+        a-scene {{
+            width: 100%;
+            height: 500px;
+        }}
+    </style>
+</head>
+<body>
+    <a-scene background="color: #000011" embedded>
+        <!-- LUZ AMBIENTAL PARA EVITAR OSCURIDAD -->
+        <a-entity light="type: ambient; color: #333; intensity: 0.6"></a-entity>
+        
+        <!-- LUZ DIRECCIONAL PRINCIPAL -->
+        <a-entity light="type: directional; color: #FFFFFF; intensity: 1.0" 
+                 position="0 10 0"></a-entity>
+        
+        <!-- ESTRELLA CENTRAL -->
+        <a-entity position="0 2 -10">
+            <a-sphere radius="1.5" color="#FFD700"
+                     animation="property: rotation; to: 0 360 0; loop: true; dur: 20000">
+            </a-sphere>
+            <a-light type="point" color="#FFD700" intensity="2" distance="50"></a-light>
+        </a-entity>
+        
+        <!-- EXOPLANETA PRINCIPAL -->
+        <a-entity position="8 2 -10">
+            <!-- Planeta principal -->
+            <a-sphere radius="{info['Radio']}" color="#4A90E2"
+                     animation="property: rotation; to: 0 360 0; loop: true; dur: 30000">
             </a-sphere>
             
-            <!-- Anillos planetarios -->
-            <a-torus position="8 2 -10" radius="2" arc="360" color="#888888" rotation="90 0 0"></a-torus>
-            
-            <!-- Montañas en el exoplaneta -->
-            <a-cone position="6 3.5 -8" radius-bottom="0.5" radius-top="0" height="1" color="#8B4513"></a-cone>
-            <a-cone position="9 3.2 -12" radius-bottom="0.7" radius-top="0" height="1.2" color="#8B4513"></a-cone>
-            
-            <!-- Estrellas en el fondo -->
-            <a-entity id="stars"></a-entity>
-            
-            <!-- Texto informativo flotante -->
-            <a-text value="EXOPLANETA: {exoplaneta_seleccionado}"
-                   position="0 4 -5" align="center" color="#FFFFFF" scale="2 2 2"></a-text>
-                   
-            <a-text value='{info['Descripción']}'
-                   position="0 3 -5" align="center" color="#CCCCCC" scale="1 1 1" width="5"></a-text>
-        </a-scene>
+            <!-- Anillos -->
+            <a-ring radius-inner="{info['Radio'] * 1.5}" 
+                   radius-outer="{info['Radio'] * 2.5}" 
+                   rotation="-60 0 0"
+                   color="#C0C0C0"
+                   animation="property: rotation; to: 90 0 0; loop: true; dur: 40000">
+            </a-ring>
+        </a-entity>
         
-        <script>
-            // Generar estrellas aleatorias en el fondo
-            for (let i = 0; i < 150; i++) {{
-                const star = document.createElement('a-sphere');
-                star.setAttribute('position', {{
-                    x: (Math.random() - 0.5) * 50,
-                    y: (Math.random() - 0.5) * 50, 
-                    z: (Math.random() - 0.5) * 50 - 20
-                }});
-                star.setAttribute('radius', Math.random() * 0.1 + 0.05);
-                star.setAttribute('color', '#FFFFFF');
-                document.getElementById('stars').appendChild(star);
-            }}
-        </script>
-    </body>
-    </html>
-    """
+        <!-- LUNA 1 -->
+        <a-entity position="11 4 -10">
+            <a-sphere radius="0.3" color="#888888"
+                     animation="property: rotation; to: 0 360 0; loop: true; dur: 15000">
+                <a-animation attribute="position" 
+                           from="11 4 -10" to="5 0 -10" 
+                           dur="20000" repeat="indefinite"></a-animation>
+            </a-sphere>
+        </a-entity>
+        
+        <!-- LUNA 2 -->
+        <a-entity position="5 0 -10">
+            <a-sphere radius="0.2" color="#AAAAAA"
+                     animation="property: rotation; to: 0 -360 0; loop: true; dur: 10000">
+                <a-animation attribute="position" 
+                           from="5 0 -10" to="11 4 -10" 
+                           dur="15000" repeat="indefinite"></a-animation>
+            </a-sphere>
+        </a-entity>
+        
+        <!-- TEXTO INFORMATIVO -->
+        <a-entity position="0 3 -5">
+            <a-text value="EXOPLANETA: {exoplaneta_seleccionado}" 
+                   position="0 0.6 0" align="center" color="#FFFFFF" scale="1.5 1.5 1.5"></a-text>
+            <a-text value="DISTANCIA: {info['Distancia']}" 
+                   position="0 0.3 0" align="center" color="#CCCCCC" scale="1 1 1"></a-text>
+            <a-text value="TIPO: {info['Tipo']}" 
+                   position="0 0 0" align="center" color="#AAAAAA" scale="1 1 1"></a-text>
+        </a-entity>
+        
+        <!-- CÁMARA CON CONTROLES -->
+        <a-entity id="camera" camera position="0 1.6 0" look-controls wasd-controls>
+            <a-cursor></a-cursor>
+        </a-entity>
+        
+        <!-- ESTRELLAS DE FONDO SIMPLES -->
+        <a-entity id="stars"></a-entity>
+        
+    </a-scene>
+
+    <script>
+        // Generar estrellas simples
+        const stars = document.getElementById('stars');
+        for (let i = 0; i < 150; i++) {{
+            const star = document.createElement('a-sphere');
+            const size = Math.random() * 0.02 + 0.005;
+            star.setAttribute('position', {{
+                x: (Math.random() - 0.5) * 50,
+                y: (Math.random() - 0.5) * 50,
+                z: (Math.random() - 0.5) * 50 - 20
+            }});
+            star.setAttribute('radius', size);
+            star.setAttribute('color', '#FFFFFF');
+            stars.appendChild(star);
+        }}
+        
+        // Mensaje de carga completada
+        document.querySelector('a-scene').addEventListener('loaded', function() {{
+            console.log('VR Scene loaded successfully!');
+        }});
+    </script>
+</body>
+</html>
+"""
     
     # Mostrar la experiencia VR
     st.components.v1.html(vr_html, height=500, scrolling=False)
     
-    st.info("""
-    **💡 Tip VR:** Si no tienes Google Cardboard, igual puedes:
-    - **Click y arrastra** para rotar la vista
-    - **Scroll** para acercarte/alejarte  
-    - **Usar las flechas** para moverte
+    # Controles y guía de usuario
+    st.markdown("""
+    ### 🎮 Controles VR:
+    
+    **🖱️ Modo Escritorio:**
+    - **Click + arrastra** para rotar la vista
+    - **Scroll** para acercar/alejar
+    - **WASD** para moverte por el espacio
+    - **Click en el icono VR** (esquina inferior derecha) para modo VR completo
+    
+    **📱 En Móvil:**
+    - **Mueve el dispositivo** para mirar alrededor
+    - **Toca y arrastra** para rotar
+    - **Usa dos dedos** para hacer zoom
     """)
     
-    # Botón para experiencia VR avanzada
-    if st.button("🚀 INICIAR EXPERIENCIA VR AVANZADA", type="primary", key="vr_advanced"):
-        st.success("🎉 ¡Preparando experiencia VR inmersiva!")
-        st.info("""
-        **🛠️ Características VR avanzadas:**
-        - **Gravedad planetaria** simulada
-        - **Atmósfera dinámica** con efectos de luz
-        - **Geología exoplanetaria** única
-        - **Sistema climático** simulado
+    # Solución de problemas
+    with st.expander("🔧 Si la escena se ve oscura:"):
+        st.markdown("""
+        **Soluciones rápidas:**
+        1. **Espera 5-10 segundos** - Los recursos pueden estar cargando
+        2. **Recarga la página** - Presiona F5 o actualiza la app
+        3. **Verifica tu conexión** - A-Frame necesita internet para cargar
+        4. **Prueba en otro navegador** - Chrome/Firefox funcionan mejor
+        5. **Haz click en la escena** - A veces necesita interacción para activarse
+        
+        **Para mejor experiencia:**
+        - Usa **Google Chrome** o **Mozilla Firefox**
+        - Asegura buena **conexión a internet**
+        - Permite **JavaScript** en tu navegador
         """)
 
 # Mensaje de integración con IA y VR
@@ -663,7 +745,7 @@ st.markdown("""
 <div class="feature-card" style="background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%); color: white;">
 <h3>🚀 EXO-AI: Del Datos a la Inmersión Total</h3>
 <p><b>IA → Telescopio → VR → Experiencia Completa</b></p>
-<p>Ahora no solo detectas y observas exoplanetas - ¡puedes VISITARLOS en Realidad Virtual!</p>
+<p>Ahora no solo detectas exoplanetas - ¡puedes EXPLORARLOS en Realidad Virtual!</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -676,8 +758,7 @@ with col2:
     st.markdown("""
     <div style='text-align: center'>
     <h3>🚀 EXO-AI Discovery Platform</h3>
-    <p><b>NASA Space Apps Challenge 2025 • Barranquilla, Colombia</b></p>
-    <p>Democratizando la exploración espacial con IA</p>
+    <p><b>NASA Space Apps Challenge 2024 • Barranquilla, Colombia</b></p>
+    <p>Democratizando la exploración espacial con IA y VR</p>
     </div>
     """, unsafe_allow_html=True)
-    

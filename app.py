@@ -78,7 +78,7 @@ st.markdown("""
 @st.cache_resource
 def load_model():
     try:
-        return joblib.load("models/exoplanet_model.pkl")  # ✅ CAMBIADO: "exoplanet_model.pkl" → "models/exoplanet_model.pkl"
+        return joblib.load("models/exoplanet_model.pkl")
     except:
         st.error("❌ Modelo no encontrado. Ejecuta primero train.py")
         return None
@@ -152,7 +152,7 @@ if "Explorer Mode" in user_mode:
         
         # Gráfico interactivo del tránsito
         fig = go.Figure()
-        time = np.linspace(0, 48, 1000)
+        tiempo_grafico = np.linspace(0, 48, 1000)
         flux = np.ones(1000)
         
         # Simular tránsito
@@ -160,10 +160,10 @@ if "Explorer Mode" in user_mode:
         transit_start = transit_center - transit_duration/2
         transit_end = transit_center + transit_duration/2
         
-        mask = (time >= transit_start) & (time <= transit_end)
+        mask = (tiempo_grafico >= transit_start) & (tiempo_grafico <= transit_end)
         flux[mask] = 1 - transit_depth/100
         
-        fig.add_trace(go.Scatter(x=time, y=flux, mode='lines', name='Brillo estelar',
+        fig.add_trace(go.Scatter(x=tiempo_grafico, y=flux, mode='lines', name='Brillo estelar',
                                 line=dict(color='#ff6f00', width=3)))
         fig.add_vrect(x0=transit_start, x1=transit_end, 
                      fillcolor="red", opacity=0.2, line_width=0,
@@ -198,7 +198,7 @@ if "Explorer Mode" in user_mode:
             input_data = np.array([[period, 0.5, 0.1, duration, depth, radius, temp, 1.0, star_mass, 12.0]])
             
             with st.spinner('🔭 Analizando datos con IA...'):
-                time.sleep(2)  # Efecto dramático
+                time.sleep(2)
                 prediction = model.predict(input_data)[0]
                 probability = model.predict_proba(input_data)[0]
             
@@ -309,7 +309,7 @@ else:
         # MATRIZ DE CONFUSIÓN INTERACTIVA
         st.subheader("Confusion Matrix")
         fig, ax = plt.subplots(figsize=(8, 6))
-        cm = np.array([[850, 45], [32, 873]])  # Datos simulados
+        cm = np.array([[850, 45], [32, 873]])
         sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', ax=ax,
                    xticklabels=['Falso Positivo', 'Exoplaneta'],
                    yticklabels=['Falso Positivo', 'Exoplaneta'])
@@ -388,7 +388,12 @@ exoplanetas_famosos = {
 }
 
 # Crear pestañas para el telescopio
-tab_tel1, tab_tel2, tab_tel3 = st.tabs(["🎯 Apuntar Telescopio", "📡 Coordenadas en Tiempo Real", "🌌 Simulación 3D"])
+tab_tel1, tab_tel2, tab_tel3, tab_tel4 = st.tabs([
+    "🎯 Apuntar Telescopio", 
+    "📡 Coordenadas en Tiempo Real", 
+    "🌌 Simulación 3D",
+    "🕶️ Experiencia VR"
+])
 
 with tab_tel1:
     st.subheader("🎯 Selección de Objetivo")
@@ -418,7 +423,7 @@ with tab_tel1:
             # Simulación de movimiento del telescopio
             progress_bar = st.progress(0)
             for i in range(100):
-                time.sleep(0.02)  # Efecto dramático
+                time.sleep(0.02)
                 progress_bar.progress(i + 1)
             
             st.success(f"✅ **TELESCOPIO APUNTANDO A:** {exoplaneta_seleccionado}")
@@ -460,8 +465,8 @@ with tab_tel2:
     fig_trayectoria = go.Figure()
     
     # Simular datos de trayectoria
-    tiempo = np.linspace(0, 24, 100)  # 24 horas
-    ra_trayectoria = 15 * tiempo  # Simulación simple
+    tiempo = np.linspace(0, 24, 100)
+    ra_trayectoria = 15 * tiempo
     
     fig_trayectoria.add_trace(go.Scatter(
         x=tiempo, y=ra_trayectoria, 
@@ -541,15 +546,127 @@ with tab_tel3:
     - **Shift + Click** para pan
     """)
 
-# Mensaje de integración con IA
+with tab_tel4:
+    st.subheader("🕶️ Experiencia de Realidad Virtual EXO-AI")
+    
+    st.markdown("""
+    <div class="feature-card">
+    <h3>🌍 Visita el Exoplaneta en Realidad Virtual</h3>
+    <p>Usa tu celular con Google Cardboard para una experiencia inmersiva completa.</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Instrucciones para VR
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("""
+        ### 📱 Preparación VR:
+        1. **Abre esta app en tu celular**
+        2. **Activa el modo VR** en tu navegador
+        3. **Coloca el celular** en Google Cardboard
+        4. **¡Explora el exoplaneta!**
+        """)
+        
+    with col2:
+        st.markdown("""
+        ### 🎮 Controles VR:
+        - **Mueve la cabeza** para mirar alrededor
+        - **Acércate** a objetos interesantes
+        - **Observa** detalles de la superficie
+        """)
+    
+    # Simulación VR Web con A-Frame
+    st.subheader("🌌 Entorno VR del Exoplaneta")
+    
+    vr_html = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    </head>
+    <body>
+        <a-scene embedded>
+            <!-- Sky - Espacio exterior -->
+            <a-sky color="#000011"></a-sky>
+            
+            <!-- Estrella central -->
+            <a-sphere position="0 2 -10" radius="2" color="#FFFF00" 
+                     animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"></a-sphere>
+            
+            <!-- Exoplaneta -->
+            <a-sphere position="8 2 -10" radius="1.2" color="#4A90E2"
+                     animation="property: rotation; to: 0 360 0; loop: true; dur: 15000">
+                <a-animation attribute="position" from="8 2 -10" to="8 2.5 -10" 
+                           direction="alternate" repeat="indefinite" dur="2000"></a-animation>
+            </a-sphere>
+            
+            <!-- Anillos planetarios -->
+            <a-torus position="8 2 -10" radius="2" arc="360" color="#888888" rotation="90 0 0"></a-torus>
+            
+            <!-- Montañas en el exoplaneta -->
+            <a-cone position="6 3.5 -8" radius-bottom="0.5" radius-top="0" height="1" color="#8B4513"></a-cone>
+            <a-cone position="9 3.2 -12" radius-bottom="0.7" radius-top="0" height="1.2" color="#8B4513"></a-cone>
+            
+            <!-- Estrellas en el fondo -->
+            <a-entity id="stars"></a-entity>
+            
+            <!-- Texto informativo flotante -->
+            <a-text value="EXOPLANETA: {exoplaneta_seleccionado}"
+                   position="0 4 -5" align="center" color="#FFFFFF" scale="2 2 2"></a-text>
+                   
+            <a-text value='{info['Descripción']}'
+                   position="0 3 -5" align="center" color="#CCCCCC" scale="1 1 1" width="5"></a-text>
+        </a-scene>
+        
+        <script>
+            // Generar estrellas aleatorias en el fondo
+            for (let i = 0; i < 150; i++) {{
+                const star = document.createElement('a-sphere');
+                star.setAttribute('position', {{
+                    x: (Math.random() - 0.5) * 50,
+                    y: (Math.random() - 0.5) * 50, 
+                    z: (Math.random() - 0.5) * 50 - 20
+                }});
+                star.setAttribute('radius', Math.random() * 0.1 + 0.05);
+                star.setAttribute('color', '#FFFFFF');
+                document.getElementById('stars').appendChild(star);
+            }}
+        </script>
+    </body>
+    </html>
+    """
+    
+    # Mostrar la experiencia VR
+    st.components.v1.html(vr_html, height=500, scrolling=False)
+    
+    st.info("""
+    **💡 Tip VR:** Si no tienes Google Cardboard, igual puedes:
+    - **Click y arrastra** para rotar la vista
+    - **Scroll** para acercarte/alejarte  
+    - **Usar las flechas** para moverte
+    """)
+    
+    # Botón para experiencia VR avanzada
+    if st.button("🚀 INICIAR EXPERIENCIA VR AVANZADA", type="primary", key="vr_advanced"):
+        st.success("🎉 ¡Preparando experiencia VR inmersiva!")
+        st.info("""
+        **🛠️ Características VR avanzadas:**
+        - **Gravedad planetaria** simulada
+        - **Atmósfera dinámica** con efectos de luz
+        - **Geología exoplanetaria** única
+        - **Sistema climático** simulado
+        """)
+
+# Mensaje de integración con IA y VR
 st.markdown("""
-<div class="feature-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
-<h3>🚀 Integración EXO-AI Completa</h3>
-<p><b>IA → Telescopio → Datos → Mejor IA</b></p>
-<p>Los exoplanetas detectados por nuestra IA pueden ser observados inmediatamente 
-con el telescopio virtual, creando un ciclo de descubrimiento continuo.</p>
+<div class="feature-card" style="background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%); color: white;">
+<h3>🚀 EXO-AI: Del Datos a la Inmersión Total</h3>
+<p><b>IA → Telescopio → VR → Experiencia Completa</b></p>
+<p>Ahora no solo detectas y observas exoplanetas - ¡puedes VISITARLOS en Realidad Virtual!</p>
 </div>
 """, unsafe_allow_html=True)
+
 # ================================
 # FOOTER - MARCA COMPETITIVA
 # ================================
@@ -563,3 +680,4 @@ with col2:
     <p>Democratizando la exploración espacial con IA</p>
     </div>
     """, unsafe_allow_html=True)
+    

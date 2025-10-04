@@ -108,6 +108,25 @@ st.markdown("""
         0%, 100% { transform: translateY(0px); }
         50% { transform: translateY(-10px); }
     }
+        @keyframes rotate {
+        from { transform: translate(-50%, -50%) rotate(0deg); }
+        to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    
+    @keyframes orbit {
+        0% { transform: translateX(150px) rotate(0deg); }
+        100% { transform: translateX(150px) rotate(360deg); }
+    }
+    
+    @keyframes orbit2 {
+        0% { transform: rotate(0deg) translateX(100px) rotate(0deg); }
+        100% { transform: rotate(360deg) translateX(100px) rotate(-360deg); }
+    }
+    
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+    }
     @media (max-width: 768px) {
         .main-header {
             font-size: 2.5rem !important;
@@ -667,7 +686,7 @@ with tab_tel4:
         </div>
         """
     
-    st.markdown(vr_html, unsafe_allow_html=True)
+    st.components.v1.html(vr_html, height=400)
     
     # Controles VR
     st.markdown("---")
@@ -749,7 +768,7 @@ with tab_ar1:
         </div>
         """
         
-        st.markdown(ar_html, unsafe_allow_html=True)
+        st.components.v1.html(ar_html, height=500)
 
 with tab_ar2:
     st.subheader("🎯 Simulación AR - Experiencia NASA")
@@ -822,7 +841,7 @@ with tab_ar2:
         
     </div>
     """
-    st.markdown(ar_simulation_html, unsafe_allow_html=True)
+    st.components.v1.html(ar_simulation_html, height=500)
 
 # Mensaje final
 st.markdown("---")

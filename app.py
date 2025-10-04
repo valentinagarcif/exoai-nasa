@@ -87,10 +87,6 @@ st.markdown("""
     .ar-instruction li {
         margin: 8px 0;
     }
-    .mobile-optimized {
-        max-width: 100%;
-        overflow-x: hidden;
-    }
     @keyframes pulse {
         0% { transform: scale(1); }
         50% { transform: scale(1.05); }
@@ -407,7 +403,6 @@ exoplanetas_famosos = {
         "Tipo": "🌍 Tierra Super",
         "Distancia": "492 años luz",
         "Descripción": "Primer exoplaneta del tamaño de la Tierra en zona habitable",
-        "Textura": "https://cdn.pixabay.com/photo/2011/12/14/12/23/planet-11094_1280.jpg",
         "Atmosfera": "#4A90E2",
         "Radio": 1.2
     },
@@ -417,7 +412,6 @@ exoplanetas_famosos = {
         "Tipo": "🌊 Planeta Oceánico",
         "Distancia": "39 años luz", 
         "Descripción": "Planeta rocoso en sistema de 7 exoplanetas",
-        "Textura": "https://cdn.pixabay.com/photo/2016/11/29/13/32/earth-1869761_1280.jpg",
         "Atmosfera": "#87CEEB",
         "Radio": 0.9
     },
@@ -427,29 +421,8 @@ exoplanetas_famosos = {
         "Tipo": "🪐 Supertierra",
         "Distancia": "4.24 años luz",
         "Descripción": "Exoplaneta más cercano a la Tierra",
-        "Textura": "https://cdn.pixabay.com/photo/2011/12/14/12/23/planet-11094_1280.jpg",
         "Atmosfera": "#FF6347",
         "Radio": 1.3
-    },
-    "Kepler-452b": {
-        "RA": "19h 44m 00.886s", 
-        "DEC": "+44° 16' 39.17\"",
-        "Tipo": "🌎 Tierra 2.0",
-        "Distancia": "1,402 años luz",
-        "Descripción": "Planeta similar a la Tierra en zona habitable",
-        "Textura": "https://cdn.pixabay.com/photo/2016/11/29/13/32/earth-1869761_1280.jpg",
-        "Atmosfera": "#32CD32",
-        "Radio": 1.6
-    },
-    "HD 209458 b": {
-        "RA": "22h 03m 10.772s", 
-        "DEC": "+18° 53' 03.54\"", 
-        "Tipo": "🔥 Júpiter Caliente",
-        "Distancia": "159 años luz",
-        "Descripción": "Primer exoplaneta detectado por tránsito",
-        "Textura": "https://cdn.pixabay.com/photo/2011/12/14/12/23/planet-11094_1280.jpg",
-        "Atmosfera": "#FF4500",
-        "Radio": 2.5
     }
 }
 
@@ -622,7 +595,7 @@ with tab_tel4:
     </div>
     """, unsafe_allow_html=True)
     
-    # Selector de modo
+    # Selector de modo VR
     vr_mode = st.radio(
         "🎮 Selecciona el modo de visualización:",
         ["🚀 Orbital Rápido", "🔭 Vista Detallada", "🌌 Sistema Completo"],
@@ -696,30 +669,21 @@ with tab_tel4:
     
     st.markdown(vr_html, unsafe_allow_html=True)
     
-    # Controles mejorados
+    # Controles VR
     st.markdown("---")
     col1, col2, col3 = st.columns(3)
     
     with col1:
-        if st.button("▶️ Reproducir", use_container_width=True, key="play_vr"):
+        if st.button("▶️ Reproducir Animación", use_container_width=True, key="play_vr"):
             st.success("🎬 Animación en curso...")
     
     with col2:
-        if st.button("⏸️ Pausar", use_container_width=True, key="pause_vr"):
-            st.info("⏸️ Animación pausada")
-    
-    with col3:
-        if st.button("🔁 Reiniciar", use_container_width=True, key="reset_vr"):
+        if st.button("🔄 Cambiar Vista", use_container_width=True, key="change_vr"):
             st.rerun()
     
-    # Información de rendimiento
-    st.info("""
-    **💡 Para mejor experiencia:**
-    - **Computadora:** Click y arrastra para rotar
-    - **Móvil:** Usa modo vertical para mejor rendimiento
-    - **Tablet:** Compatible con gestos táctiles
-    - **Todos los dispositivos:** Animaciones suaves garantizadas
-    """)
+    with col3:
+        if st.button("📱 Optimizar Móvil", use_container_width=True, key="mobile_vr"):
+            st.info("📱 Vista optimizada para móvil")
 
 # ================================
 # 🥇 REALIDAD AUMENTADA MEJORADA
@@ -727,7 +691,7 @@ with tab_tel4:
 st.markdown("---")
 st.header("🥇 Realidad Aumentada: Exoplaneta en tu Habitación")
 
-tab_ar1, tab_ar2, tab_ar3 = st.tabs(["📱 AR Interactivo", "🎯 Simulación AR", "📸 Mi Experiencia"])
+tab_ar1, tab_ar2 = st.tabs(["📱 AR Interactivo", "🎯 Simulación AR"])
 
 with tab_ar1:
     st.subheader("📱 AR Interactivo - Exoplaneta en tu Espacio")
@@ -747,57 +711,45 @@ with tab_ar1:
         planet_size = st.slider("Tamaño del planeta", 50, 200, 120, key="planet_size")
         planet_color = st.color_picker("Color del planeta", info['Atmosfera'], key="planet_color")
         rotation_speed = st.slider("Velocidad de rotación", 1, 10, 4, key="rotation_speed")
-        show_rings = st.checkbox("Mostrar anillos", value=True, key="show_rings")
-        show_moons = st.checkbox("Mostrar lunas", value=True, key="show_moons")
         
         if st.button("🔄 Actualizar Visualización AR", type="primary", key="update_ar"):
-            st.rerun()
+            st.success("✨ Visualización AR actualizada!")
     
     with col2:
         st.subheader("📱 Simulación AR")
-        # Visualización mejorada del planeta
+        
+        # HTML simple y funcional para AR
         ar_html = f"""
-        <div style="text-align: center; padding: 30px; background: linear-gradient(135deg, #000428, #004e92); 
+        <div style="text-align: center; padding: 40px; background: linear-gradient(135deg, #000428, #004e92); 
                     border-radius: 20px; color: white; margin: 10px 0; min-height: 400px; display: flex; flex-direction: column; justify-content: center;">
+            
             <div style="position: relative; margin: 0 auto;">
                 <!-- Planeta principal -->
                 <div style="width: {planet_size}px; height: {planet_size}px; background: {planet_color}; 
                           border-radius: 50%; margin: 20px auto; box-shadow: 0 0 50px {planet_color};
-                          animation: rotate {15/rotation_speed}s linear infinite;
-                          display: flex; align-items: center; justify-content: center;">
-                    <div style="width: 80%; height: 80%; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+                          animation: rotate {15/rotation_speed}s linear infinite;">
                 </div>
                 
                 <!-- Anillos -->
-                {'<div style="width: ' + str(planet_size + 80) + 'px; height: 20px; background: linear-gradient(90deg, transparent, #C0C0C0, transparent); border-radius: 10px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(30deg); opacity: 0.7; animation: rotate ' + str(20/rotation_speed) + 's linear infinite reverse;"></div>' if show_rings else ''}
-                
-                <!-- Lunas -->
-                {'<div style="width: ' + str(planet_size//4) + 'px; height: ' + str(planet_size//4) + 'px; background: #888888; border-radius: 50%; position: absolute; top: 50%; left: 50%; margin-left: ' + str(planet_size//2 + 40) + 'px; animation: orbit2 ' + str(8/rotation_speed) + 's linear infinite;"></div>' if show_moons else ''}
+                <div style="width: {planet_size + 80}px; height: 20px; background: linear-gradient(90deg, transparent, #C0C0C0, transparent);
+                          border-radius: 10px; position: absolute; top: 50%; left: 50%;
+                          transform: translate(-50%, -50%) rotate(30deg); opacity: 0.7;">
+                </div>
                 
             </div>
-            <h3 style="margin-top: 20px;">{exoplaneta_seleccionado}</h3>
-            <p>Flotando en tu espacio • {info['Distancia']}</p>
-            <div style="background: rgba(255,255,255,0.1); padding: 10px; border-radius: 10px; margin-top: 10px;">
-                <p style="margin: 5px 0; font-size: 0.9em;">🎯 Enfoca tu cámara aquí</p>
-                <p style="margin: 5px 0; font-size: 0.9em;">📱 Compatible con todos los dispositivos</p>
+            
+            <h3 style="margin-top: 30px;">{exoplaneta_seleccionado}</h3>
+            <p>✨ Flotando en tu espacio real</p>
+            <p>📱 {info['Distancia']} • {info['Tipo']}</p>
+            
+            <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px; margin-top: 20px;">
+                <p style="margin: 5px 0; font-size: 1em;">🎯 <b>Enfoca tu cámara aquí</b></p>
+                <p style="margin: 5px 0; font-size: 0.9em;">El exoplaneta aparecerá en tu espacio</p>
             </div>
         </div>
         """
+        
         st.markdown(ar_html, unsafe_allow_html=True)
-    
-    # Instrucciones para AR real
-    st.markdown("""
-    <div class="ar-instruction">
-    <h4>🚀 Para Experiencia AR Completa en Móvil:</h4>
-    <ol>
-        <li><b>Abre esta app en tu celular</b> (Chrome o Safari)</li>
-        <li><b>Permite acceso a la cámara</b> cuando tu navegador lo solicite</li>
-        <li><b>Enfoca a cualquier superficie plana</b> como una mesa o pared</li>
-        <li><b>¡Mira el exoplaneta aparecer!</b> 🪐</li>
-    </ol>
-    <p><em>💡 Nuestra tecnología detecta superficies automáticamente - no necesitas marcadores</em></p>
-    </div>
-    """, unsafe_allow_html=True)
 
 with tab_ar2:
     st.subheader("🎯 Simulación AR - Experiencia NASA")
@@ -815,11 +767,6 @@ with tab_ar2:
         """)
         
         # Configuración AR avanzada
-        ar_effects = st.multiselect("✨ Efectos Especiales", 
-                                  ["🌠 Campo estelar", "💫 Brillos atmosféricos", "🌪️ Nubes dinámicas", "🛸 Naves espaciales"],
-                                  default=["🌠 Campo estelar", "💫 Brillos atmosféricos"],
-                                  key="ar_effects_adv")
-        
         ar_quality = st.select_slider("🎯 Calidad Visual", 
                                     options=["🟢 Básica", "🔴 Estándar", "🟣 Premium", "⚡ NASA"],
                                     value="🟣 Premium",
@@ -832,158 +779,56 @@ with tab_ar2:
         - **Acércate/alejate** físicamente
         - **Toca la pantalla** para información
         - **Gira alrededor** para ver todos los ángulos
-        - **Pellizca** para hacer zoom
         """)
         
         # Simulación de experiencia AR
         st.subheader("📊 Estado del Sistema AR")
-        col_status1, col_status2, col_status3 = st.columns(3)
+        col_status1, col_status2 = st.columns(2)
         with col_status1:
             st.metric("🎯 Tracking", "Activo", "98%")
         with col_status2:
             st.metric("📷 Cámara", "Lista", "720p")
-        with col_status3:
-            st.metric("🪐 Render", "60 FPS", "Óptimo")
     
     # Simulación AR avanzada
-    st.subheader("🌌 Vista Previa AR")
+    st.subheader("🌌 Vista Previa AR NASA")
     ar_simulation_html = f"""
     <div style="text-align: center; background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); 
-                color: white; padding: 40px; border-radius: 20px; margin: 20px 0; position: relative;">
+                color: white; padding: 50px; border-radius: 20px; margin: 20px 0; position: relative;">
         
         <!-- Elemento AR simulado -->
-        <div style="position: relative; width: 300px; height: 300px; margin: 0 auto;">
+        <div style="position: relative; width: 250px; height: 250px; margin: 0 auto;">
             <!-- Exoplaneta -->
-            <div style="width: 120px; height: 120px; background: radial-gradient(circle, {info['Atmosfera']}, #1a237e);
+            <div style="width: 100px; height: 100px; background: radial-gradient(circle, {info['Atmosfera']}, #1a237e);
                       border-radius: 50%; position: absolute; top: 50%; left: 50%; 
                       transform: translate(-50%, -50%); box-shadow: 0 0 60px {info['Atmosfera']};
-                      animation: rotate 25s linear infinite;">
-            </div>
-            
-            <!-- Anillos -->
-            <div style="width: 200px; height: 25px; background: linear-gradient(90deg, transparent, #C0C0C0 20%, #C0C0C0 80%, transparent);
-                      border-radius: 12.5px; position: absolute; top: 50%; left: 50%;
-                      transform: translate(-50%, -50%) rotate(45deg); opacity: 0.8;
-                      animation: rotate 15s linear infinite reverse;">
-            </div>
-            
-            <!-- Lunas -->
-            <div style="width: 25px; height: 25px; background: #AAAAAA; border-radius: 50%;
-                      position: absolute; top: 50%; left: 50%; margin-left: 100px;
-                      animation: orbit2 12s linear infinite;">
+                      animation: rotate 20s linear infinite;">
             </div>
             
             <!-- Efectos especiales -->
-            <div style="width: 180px; height: 180px; border: 2px solid rgba(255,255,255,0.1); 
+            <div style="width: 150px; height: 150px; border: 2px solid rgba(255,255,255,0.2); 
                       border-radius: 50%; position: absolute; top: 50%; left: 50%;
                       transform: translate(-50%, -50%); animation: pulse 3s ease-in-out infinite;">
             </div>
         </div>
         
-        <h3 style="margin-top: 30px;">{exoplaneta_seleccionado} - Modo AR</h3>
-        <p>Simulación de Realidad Aumentada NASA</p>
+        <h3 style="margin-top: 30px;">{exoplaneta_seleccionado} - Modo AR NASA</h3>
+        <p>Simulación de Realidad Aumentada de nivel profesional</p>
         
         <!-- Overlay de cámara -->
-        <div style="position: absolute; top: 20px; left: 20px; background: rgba(0,0,0,0.7); 
-                    color: white; padding: 10px; border-radius: 10px; font-size: 0.8em;">
-            📷 Cámara AR Activada
+        <div style="position: absolute; top: 20px; left: 20px; background: rgba(0,0,0,0.8); 
+                    color: #00FF00; padding: 10px; border-radius: 10px; font-size: 0.9em; border: 1px solid #00FF00;">
+            📷 AR ACTIVO
         </div>
         
-        <div style="position: absolute; bottom: 20px; right: 20px; background: rgba(0,0,0,0.7); 
-                    color: #FFD700; padding: 10px; border-radius: 10px; font-size: 0.8em;">
-            🎯 Surface Tracking
-        </div>
     </div>
     """
     st.markdown(ar_simulation_html, unsafe_allow_html=True)
 
-with tab_ar3:
-    st.subheader("📸 Comparte tu Experiencia AR")
-    
-    st.markdown(f"""
-    <div class="feature-card">
-    <h3>📸 Captura {exoplaneta_seleccionado} en tu mundo real</h3>
-    <p>Toma fotos y videos del exoplaneta interactuando con tu espacio y compártelos con la comunidad científica.</p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Simulación de experiencia AR compartida
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.subheader("🖼️ Galería AR Comunidad")
-        
-        # Simulación de galería
-        gallery_html = """
-        <div style="background: linear-gradient(135deg, #1a237e, #4a148c); color: white; padding: 25px; border-radius: 15px; text-align: center;">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0;">
-                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px;">
-                    <div style="width: 80px; height: 80px; background: radial-gradient(circle, #4A90E2, #1a237e); border-radius: 50%; margin: 0 auto;"></div>
-                    <p style="margin: 10px 0 0 0; font-size: 0.8em;">@Maria_C 🔭</p>
-                </div>
-                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px;">
-                    <div style="width: 80px; height: 80px; background: radial-gradient(circle, #FF6347, #8B0000); border-radius: 50%; margin: 0 auto;"></div>
-                    <p style="margin: 10px 0 0 0; font-size: 0.8em;">@Astro_Juan 🌌</p>
-                </div>
-            </div>
-            <p style="margin: 0; font-size: 0.9em;">📸 <b>Tu foto podría aparecer aquí</b></p>
-            <p style="margin: 5px 0 0 0; font-size: 0.8em;">Comparte tu experiencia AR con #EXOAINASA</p>
-        </div>
-        """
-        st.markdown(gallery_html, unsafe_allow_html=True)
-        
-        # Subir "foto AR"
-        uploaded_ar_photo = st.file_uploader("📸 Sube tu foto con el exoplaneta en AR", type=['png', 'jpg', 'jpeg'], key="ar_photo")
-        if uploaded_ar_photo is not None:
-            st.success("🎉 ¡Foto AR subida exitosamente!")
-            st.image(uploaded_ar_photo, caption=f"Tu experiencia AR con {exoplaneta_seleccionado}", use_column_width=True)
-    
-    with col2:
-        st.subheader("🏆 Tu Certificado AR")
-        st.markdown(f"""
-        <div style="border: 3px solid #FFD700; padding: 25px; border-radius: 15px; 
-                    background: linear-gradient(135deg, #1a237e, #4a148c); color: white; text-align: center;">
-            <h3 style="margin: 0; color: #FFD700;">🏆 CERTIFICADO AR NASA</h3>
-            <h4 style="margin: 15px 0; color: #FFFFFF;">Explorador de Realidad Aumentada</h4>
-            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; margin: 15px 0;">
-                <p style="margin: 5px 0;">Has proyectado exitosamente</p>
-                <p style="margin: 5px 0; font-size: 1.2em; font-weight: bold;">{exoplaneta_seleccionado}</p>
-                <p style="margin: 5px 0;">en tu espacio real con tecnología NASA</p>
-            </div>
-            <p style="margin: 10px 0; font-size: 0.9em;">EXO-AI • NASA Space Apps Challenge 2025</p>
-            <p style="margin: 5px 0; font-size: 0.8em; color: #CCCCCC;">Barranquilla, Colombia</p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    # Estadísticas interactivas
-    st.subheader("📊 Tu Viaje AR")
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.metric("🪐 Exoplanetas Vistos", "5", "+2")
-    with col2:
-        st.metric("⏱️ Tiempo en AR", "47 min", "+15 min")
-    with col3:
-        st.metric("🌟 Experiencias", "12", "+3")
-
-# Mensaje WOW final
+# Mensaje final
+st.markdown("---")
 st.markdown("""
-<div class="feature-card" style="background: linear-gradient(135deg, #FF6B35, #F7931E); color: white; text-align: center; padding: 40px;">
-<h2 style="margin: 0; font-size: 2.5rem;">🚀 ¡WOW! EXPERIENCIA NASA EN TU HABITACIÓN</h2>
-<p style="margin: 15px 0; font-size: 1.3em;"><b>Del espacio exterior a tu espacio personal • Realidad Aumentada Next Level</b></p>
-<p style="margin: 0; font-size: 1.1em;">🥇 Tecnología que impresionará a los jueces de NASA</p>
+<div style="text-align: center; background: linear-gradient(135deg, #FF6B35, #F7931E); color: white; padding: 40px; border-radius: 20px;">
+<h2>🚀 EXO-AI NASA SPACE APPS 2025</h2>
+<p><b>Democratizando la exploración espacial desde Barranquilla, Colombia</b></p>
 </div>
 """, unsafe_allow_html=True)
-
-# ================================
-# FOOTER - MARCA COMPETITIVA
-# ================================
-st.markdown("---")
-col1, col2, col3 = st.columns(3)
-with col2:
-    st.markdown("""
-    <div style='text-align: center'>
-    <h3>🚀 EXO-AI Discovery Platform</h3>
-    <p><b>NASA Space Apps Challenge 2025 • Barranquilla, Colombia</b></p>
-    <p>Democratizando la exploración espacial con IA y Realidad Aumentada</p>
-    </div>
-    """, unsafe_allow_html=True)

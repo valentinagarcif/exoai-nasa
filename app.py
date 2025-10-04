@@ -149,7 +149,7 @@ with st.sidebar:
     
     st.markdown("---")
     st.markdown("**🚀 Developed in Barranquilla**")
-    st.markdown("*NASA Space Apps Challenge 2024*")
+    st.markdown("*NASA Space Apps Challenge 2025*")
 
 # ================================
 # MODO PRINCIPIANTE - EXPERIENCIA EDUCATIVA
@@ -1072,7 +1072,7 @@ with col2:
     st.markdown("""
     <div style='text-align: center'>
     <h3>🚀 EXO-AI Discovery Platform</h3>
-    <p><b>NASA Space Apps Challenge 2024 • Barranquilla, Colombia</b></p>
+    <p><b>NASA Space Apps Challenge 2025 • Barranquilla, Colombia</b></p>
     <p>Democratizando la exploración espacial con IA y Realidad Aumentada</p>
     </div>
     """, unsafe_allow_html=True)

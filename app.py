@@ -1076,3 +1076,24 @@ with col2:
     <p>Democratizando la exploración espacial con IA y Realidad Aumentada</p>
     </div>
     """, unsafe_allow_html=True)
+    # En la configuración de página
+st.set_page_config(
+    page_title="EXO-AI • NASA Space Apps",
+    page_icon="🚀", 
+    layout="wide",
+    initial_sidebar_state="collapsed"  # ← Importante para móviles
+)
+
+# CSS para móviles
+st.markdown("""
+<style>
+    @media (max-width: 768px) {
+        .main-header {
+            font-size: 2.5rem !important;
+        }
+        .feature-card {
+            padding: 15px !important;
+        }
+    }
+</style>
+""", unsafe_allow_html=True)

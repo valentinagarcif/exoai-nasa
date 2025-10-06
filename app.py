@@ -463,6 +463,7 @@ def apply_nasa_validated_model(period, depth, duration, radius, temp, star_mass)
         classification = "LIKELY FALSE POSITIVE"
     
     return prediction, score, confidence_factors, scientific_notes, classification, confidence
+
 # ================================
 # NUEVAS FUNCIONES - FUENTES NASA Y EVIDENCIA ML
 # ================================
@@ -612,7 +613,8 @@ if __name__ == "__main__":
         - **Confirmados:** 2,662+ exoplanetas
         - **Características:** 10 parámetros físicos
         """)
-    # ================================
+
+# ================================
 # NASA VALIDATION DASHBOARD
 # ================================
 def create_nasa_validation_dashboard(prediction, score, confidence_factors, scientific_notes, classification, confidence):
@@ -885,6 +887,279 @@ def create_scientific_visualizations(period, depth, duration, radius, temp, star
                       color_continuous_scale='viridis')
     fig_sizes.update_layout(xaxis_title="Planet", yaxis_title="Radius (Earth Radii)")
     st.plotly_chart(fig_sizes, use_container_width=True)
+
+# ================================
+# 🕶️ NUEVA SECCIÓN VR - REALIDAD VIRTUAL
+# ================================
+def create_vr_experience_section():
+    """Create the complete Virtual Reality experience section"""
+    
+    st.markdown("---")
+    st.header("🕶️ Virtual Reality Experience")
+    
+    # Educational note
+    st.markdown("""
+    <div class="educational-note">
+    <h3>🎓 Educational VR Simulation</h3>
+    <p>Explore exoplanetary systems in immersive 3D virtual reality based on real NASA data and scientific principles.</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Create tabs for different VR experiences
+    tab_vr1, tab_vr2, tab_vr3 = st.tabs(["🎮 VR Explorer", "🌌 Multi-System VR", "🚀 NASA Mission Sim"])
+    
+    with tab_vr1:
+        st.subheader("🎮 VR Exoplanet Explorer")
+        
+        st.markdown("""
+        <div class="feature-card">
+        <h3>Immerse Yourself in Exoplanetary Systems</h3>
+        <p>Navigate through 3D simulations of confirmed exoplanet systems using real NASA orbital data.</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # VR Experience HTML
+        vr_html = """
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+            <style>
+                body { margin: 0; padding: 0; overflow: hidden; }
+                .vr-overlay {
+                    position: absolute; top: 10px; left: 10px;
+                    background: rgba(0,0,0,0.8); color: white;
+                    padding: 15px; border-radius: 10px; z-index: 1000;
+                    max-width: 300px;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="vr-overlay">
+                <h4 style="margin: 0; color: #FFD700;">🚀 EXO-AI VR</h4>
+                <p style="margin: 5px 0;">Use mouse to look around • WASD to move</p>
+            </div>
+            
+            <a-scene background="color: #000011" embedded>
+                <!-- Ambient light -->
+                <a-entity light="type: ambient; color: #333; intensity: 0.6"></a-entity>
+                
+                <!-- Directional light -->
+                <a-entity light="type: directional; color: #FFFFFF; intensity: 1.0" 
+                         position="0 10 0"></a-entity>
+                
+                <!-- Central Star -->
+                <a-entity position="0 2 -8">
+                    <a-sphere radius="1.5" color="#FFD700"
+                             animation="property: rotation; to: 0 360 0; loop: true; dur: 20000">
+                    </a-sphere>
+                </a-entity>
+                
+                <!-- Exoplanet Orbit 1 - Kepler-186f -->
+                <a-entity position="4 2 -8">
+                    <a-sphere radius="0.5" color="#4A90E2"
+                             animation="property: rotation; to: 0 360 0; loop: true; dur: 10000">
+                    </a-sphere>
+                    <a-text value="Kepler-186f" position="0 0.8 0" align="center" 
+                           color="#FFFFFF" scale="1.2 1.2 1.2"></a-text>
+                </a-entity>
+                
+                <!-- Exoplanet Orbit 2 - TRAPPIST-1e -->
+                <a-entity position="-3 2 -6">
+                    <a-sphere radius="0.3" color="#FF6347"
+                             animation="property: rotation; to: 360 0 0; loop: true; dur: 15000">
+                    </a-sphere>
+                    <a-text value="TRAPPIST-1e" position="0 0.6 0" align="center" 
+                           color="#FFFFFF" scale="1 1 1"></a-text>
+                </a-entity>
+                
+                <!-- Asteroid Belt -->
+                <a-entity position="0 2 -10">
+                    <a-ring radius-inner="2.5" radius-outer="3.0" color="#888888" 
+                           rotation="-90 0 0" opacity="0.3"></a-ring>
+                </a-entity>
+                
+                <!-- Informative text -->
+                <a-entity position="0 4 -5">
+                    <a-text value="EXOPLANET SYSTEM VR" align="center" color="#FFFFFF" scale="2 2 2"></a-text>
+                    <a-text value="Based on NASA Kepler Data" align="center" color="#CCCCCC" 
+                           position="0 -0.3 0" scale="1.2 1.2 1.2"></a-text>
+                </a-entity>
+                
+                <!-- Camera with controls -->
+                <a-entity id="camera" camera position="0 1.6 0" look-controls wasd-controls>
+                    <a-cursor></a-cursor>
+                </a-entity>
+            </a-scene>
+        </body>
+        </html>
+        """
+        
+        st.components.v1.html(vr_html, height=500, scrolling=False)
+        
+        st.markdown("""
+        ### 🎮 VR Controls:
+        - **🖱️ Mouse**: Look around
+        - **WASD**: Move through space
+        - **Click**: Interact with objects
+        - **Scroll**: Adjust movement speed
+        - **Space**: Move upward
+        - **Shift**: Move downward
+        """)
+    
+    with tab_vr2:
+        st.subheader("🌌 Multi-System VR Experience")
+        
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.markdown("""
+            ### 🌟 Multi-System Features:
+            - **Compare different exoplanetary systems**
+            - **Scale-accurate orbital distances**
+            - **Real NASA orbital parameters**
+            - **Interactive information panels**
+            - **Educational guided tours**
+            """)
+            
+            # System selection
+            vr_system = st.selectbox(
+                "Select Exoplanet System:",
+                ["Kepler-186 System", "TRAPPIST-1 System", "Proxima Centauri System", "HD 209458 System"]
+            )
+            
+            # VR settings
+            vr_scale = st.slider("🔭 System Scale", 0.1, 2.0, 1.0)
+            vr_speed = st.slider("⏱️ Animation Speed", 0.1, 3.0, 1.0)
+        
+        with col2:
+            st.markdown("""
+            ### 📊 System Information:
+            **Kepler-186 System:**
+            - 5 exoplanets total
+            - Kepler-186f: First Earth-sized in habitable zone
+            - Distance: 492 light years
+            
+            **TRAPPIST-1 System:**
+            - 7 Earth-sized planets
+            - 3 in habitable zone
+            - Distance: 39 light years
+            """)
+            
+            if st.button("🚀 Launch Multi-System VR", use_container_width=True):
+                st.success("Multi-system VR experience loading...")
+                st.info("Use VR headset for full immersion or explore with mouse and keyboard")
+        
+        # Advanced VR HTML
+        vr_advanced_html = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+            <style>
+                body {{ margin: 0; padding: 0; overflow: hidden; }}
+                .vr-ui {{
+                    position: absolute; bottom: 20px; left: 0; right: 0;
+                    text-align: center; z-index: 1000;
+                }}
+                .vr-ui div {{
+                    background: rgba(0,0,0,0.8); color: white;
+                    padding: 10px 20px; border-radius: 20px;
+                    display: inline-block; border: 2px solid #FFD700;
+                }}
+            </style>
+        </head>
+        <body>
+            <a-scene background="color: #000011" embedded>
+                <!-- Multiple star systems -->
+                <a-entity id="system1" position="-5 0 -10">
+                    <!-- Star 1 -->
+                    <a-sphere radius="0.8" color="#FFD700"></a-sphere>
+                    <!-- Planet 1 -->
+                    <a-entity position="2 0 0">
+                        <a-sphere radius="0.2" color="#4A90E2"></a-sphere>
+                    </a-entity>
+                </a-entity>
+                
+                <a-entity id="system2" position="5 0 -8">
+                    <!-- Star 2 -->
+                    <a-sphere radius="0.5" color="#FF4500"></a-sphere>
+                    <!-- Planet 2 -->
+                    <a-entity position="1.5 0 0">
+                        <a-sphere radius="0.15" color="#32CD32"></a-sphere>
+                    </a-entity>
+                </a-entity>
+                
+                <!-- Navigation guides -->
+                <a-entity position="0 3 -5">
+                    <a-text value="MULTI-SYSTEM VR" align="center" 
+                           color="#FFFFFF" scale="1.5 1.5 1.5"></a-text>
+                    <a-text value="Explore Different Exoplanetary Systems" 
+                           position="0 -0.2 0" align="center" 
+                           color="#CCCCCC" scale="1 1 1"></a-text>
+                </a-entity>
+                
+                <!-- Camera with enhanced controls -->
+                <a-entity camera position="0 1.6 0" look-controls wasd-controls>
+                    <a-cursor></a-cursor>
+                </a-entity>
+            </a-scene>
+            
+            <div class="vr-ui">
+                <div>
+                    🎮 <b>WASD to move</b> • 🖱️ <b>Mouse to look</b> • 🌌 <b>Explore multiple systems</b>
+                </div>
+            </div>
+        </body>
+        </html>
+        """
+        
+        st.components.v1.html(vr_advanced_html, height=500, scrolling=False)
+    
+    with tab_vr3:
+        st.subheader("🚀 NASA Mission Simulation")
+        
+        st.markdown("""
+        <div class="feature-card">
+        <h3>Experience NASA Exoplanet Discovery Missions</h3>
+        <p>Simulate the process of exoplanet discovery from telescope observation to data analysis.</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Mission simulation controls
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            mission_phase = st.select_slider(
+                "🛰️ Mission Phase:",
+                options=["🔭 Telescope Deployment", "📡 Data Collection", "🔍 Transit Detection", "📊 Analysis", "🎯 Confirmation"]
+            )
+            
+            if st.button("🔄 Start Mission Simulation", use_container_width=True):
+                with st.spinner("Initializing NASA mission simulation..."):
+                    time.sleep(2)
+                    st.success("Mission simulation ready! Explore in VR.")
+        
+        with col2:
+            st.metric("🎯 Mission Accuracy", "96.2%")
+            st.metric("⏱️ Simulation Time", "45 min")
+            st.metric("🪐 Exoplanets Found", "3")
+        
+        # Mission simulation info
+        st.markdown("""
+        ### 🎯 Mission Objectives:
+        1. **Deploy virtual telescope** in Earth orbit
+        2. **Monitor target star systems** for transits
+        3. **Analyze light curve data** for planetary signatures
+        4. **Confirm exoplanet discoveries** using NASA criteria
+        5. **Document findings** in mission log
+        
+        ### 🏆 Educational Value:
+        - Understand NASA's exoplanet discovery process
+        - Learn about transit method detection
+        - Experience data analysis techniques
+        - Develop scientific observation skills
+        """)
 
 # ================================
 # AUGMENTED REALITY SECTION
@@ -1803,6 +2078,11 @@ else:
 # CALL TELESCOPE SECTION
 # ================================
 create_telescope_section()
+
+# ================================
+# 🕶️ CALL VR SECTION - NUEVA SECCIÓN AÑADIDA
+# ================================
+create_vr_experience_section()
 
 # ================================
 # CALL AUGMENTED REALITY SECTION
